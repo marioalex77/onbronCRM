@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<base href="http://demo.tecdiary.my/spos/" />
+<title>Daily Sales | Simple POS</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" href="http://demo.tecdiary.my/spos/assets/images/favicon.ico" />
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/bootstrap.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/datatables.css" type="text/css">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/dash.css" type="text/css">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/non-responsive.css" type="text/css">
+<script src="http://demo.tecdiary.my/spos/assets/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.tip').tooltip();
+	$('.alert').click(function(){ $(this).fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); });
+	window.setTimeout(function() { $(".alert").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 8000);
+});
+</script>
+</head>
+<body>
+<div id="wrap">
+<div class="navbar navbar-static-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand">Simple POS</a> 
+    </div>
+    <div class="navbar-collapse collapse navbar-inverse-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown"> <a class="dropdown-toggle tip" data-toggle="dropdown" href="#" data-placement="right" title="Language"><img src="http://demo.tecdiary.my/spos/assets/images/english.png" style="margin-top:-1px" align="middle"></a>
+          <ul class="dropdown-menu" style="min-width: 60px;" role="menu" aria-labelledby="dLabel">
+                        <li><a href="http://demo.tecdiary.my/spos/index.php?module=pos&view=language&lang=english"><img src="http://demo.tecdiary.my/spos/assets/images/english.png" class="language-img"> &nbsp;&nbsp;
+              English              </a></li>
+                      </ul>
+        </li>
+         
+        <li><a href="http://demo.tecdiary.my/spos/index.php?module=settings" class="tip" data-placement="right" title="Home"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li><a href="http://demo.tecdiary.my/spos/index.php?module=settings&view=system_setting" class="tip" data-placement="right" title="Settings"><i class="glyphicon glyphicon-cog"></i></a></li>
+                <li><a href="http://demo.tecdiary.my/spos/index.php?module=pos" class="tip" data-placement="right" title="POS Sale"><i class="glyphicon glyphicon-th-large"></i></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, Admin! <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://demo.tecdiary.my/spos/index.php?module=auth&amp;view=change_password">Change Password</a></li>
+            <li><a href="http://demo.tecdiary.my/spos/index.php?module=auth&amp;view=logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="pull-right">
+                <a href="http://codecanyon.net/item/simple-pos-point-of-sale-made-easy/3947976?ref=tecdiary" class="tip btn btn-default btn-sm pull-left external" style="padding:5px 8px; margin: 5px 5px 5px 5px;" title="<strong>Liked?</strong> Let's Purchase<br><strong>Have Suggestion?</strong> Please send email to contact@tecdiary.com" data-html="true" data-placement="bottom"> Buy Now </a>
+                      
+      <ul class="nav navbar-nav">
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Products          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=products">
+              List Products              </a></li>
+            <li><a href="index.php?module=products&view=add">
+              Add Product              </a></li>
+            <li><a href="index.php?module=products&view=import">
+              Import by CSV              </a></li>
+            <li><a href="index.php?module=products&view=sheet">
+              Print Barcode              </a></li>
+            <li><a href="index.php?module=products&view=labels">
+              Print Lablels              </a></li>    
+              <li class="divider"></li>
+              <li><a href="index.php?module=products&view=categories">
+              List Categories              </a></li>
+            <li><a href="index.php?module=products&view=add_category">
+              Add Category              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Customers          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=customers">
+              List Customers              </a></li>
+            <li><a href="index.php?module=customers&view=add">
+              Add Customer              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Sales          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=sales">
+              List Sales              </a></li>
+            <li><a href="index.php?module=sales&view=holded">
+              List Opened Bills              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Reports          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=reports&view=daily_sales">
+              Daily Sales              </a></li>
+            <li><a href="index.php?module=reports&view=monthly_sales">
+              Monthly Sales              </a></li>
+            <li><a href="index.php?module=reports">
+              Sales Reports              </a></li>
+              <li class="divider"></li>
+              <li><a href="index.php?module=reports&view=top">
+              Top Products              </a></li>
+              <li><a href="index.php?module=reports&view=products">
+              Products Reports              </a></li>
+          </ul>
+        </li> 
+        </ul>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container"><link href="http://demo.tecdiary.my/spos/assets/css/calender.css" rel="stylesheet">
+
+  <h3>Daily Sales</h3>
+  <p><span class='text-warning'>Tax = Orange</span>, Discount = Gray &amp; <span class='text-success'>Total = Green</span></p>
+  <table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" style="min-width:522px;">
+
+<tr class="active">
+<th><div class="text-center"><a href="index.php?module=reports&view=daily_sales&year=2017&month=02">&lt;&lt;</div></a></th>
+<th colspan="5"><div class="text-center">March&nbsp;2017</div></th>
+<th><div class="text-center"><a href="index.php?module=reports&view=daily_sales&year=2017&month=04">&gt;&gt;</a></div></th>
+</tr>
+
+<tr>
+<td class="cl_equal"><div class="cl_wday">Monday</div></td><td class="cl_equal"><div class="cl_wday">Tuesday</div></td><td class="cl_equal"><div class="cl_wday">Wednesday</div></td><td class="cl_equal"><div class="cl_wday">Thursday</div></td><td class="cl_equal"><div class="cl_wday">Friday</div></td><td class="cl_equal"><div class="cl_wday">Saturday</div></td><td class="cl_equal"><div class="cl_wday">Sunday</div></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td><td><div class="cl_left">1</div><div class="cl_right"><span class='text-warning'>28.82</span><br>2607.75<br><span class='text-success'>4754341.17</span></div></td><td><div class="cl_left">2</div><div class="cl_right"><span class='text-warning'>34.00</span><br>5.00<br><span class='text-success'>9348260.00</span></div></td><td><div class="cl_left">3</div><div class="cl_right"><span class='text-warning'>30.80</span><br>655.50<br><span class='text-success'>7235043.00</span></div></td><td><div class="cl_left">4</div><div class="cl_right"><span class='text-warning'>8766.90</span><br>9090947.30<br><span class='text-success'>102461.79</span></div></td><td><div class="cl_left">5</div><div class="cl_right"><span class='text-warning'>50.00</span><br>38018.55<br><span class='text-success'>460981752.45</span></div></td>
+</tr>
+
+<tr>
+<td><div class="cl_left">6</div><div class="cl_right"><span class='text-warning'>412.95</span><br>1178.45<br><span class='text-success'>2874215.20</span></div></td><td><div class="cl_left">7</div><div class="cl_right"><span class='text-warning'>10.00</span><br>0.00<br><span class='text-success'>2731883.00</span></div></td><td><div class="cl_left">8</div><div class="cl_right"><span class='text-warning'>10.00</span><br>25.00<br><span class='text-success'>3188140961.00</span></div></td><td><div class="cl_left">9</div><div class="cl_right"><span class='text-warning'>45454732.10</span><br>55.00<br><span class='text-success'>1898589125.60</span></div></td><td><div class="cl_left">10</div><div class="cl_right"><span class='text-warning'>22735919.54</span><br>6.70<br><span class='text-success'>477390229.34</span></div></td><td><div class="cl_left">11</div><div class="cl_right"><span class='text-warning'>431848559.20</span><br>901.80<br><span class='text-success'>2704734960.25</span></div></td><td><div class="cl_left">12</div><div class="cl_right"><span class='text-warning'>86380479.85</span><br>0.00<br><span class='text-success'>646314619.85</span></div></td>
+</tr>
+
+<tr>
+<td><div class="cl_left">13</div><div class="cl_right"><span class='text-warning'>22145.55</span><br>20.00<br><span class='text-success'>6440998.55</span></div></td><td><div class="cl_left">14</div><div class="cl_right"><span class='text-warning'>33157.64</span><br>19.00<br><span class='text-success'>27308584.64</span></div></td><td><div class="cl_left">15</div><div class="cl_right"><span class='text-warning'>9735.70</span><br>235836.45<br><span class='text-success'>4729648.25</span></div></td><td><div class="cl_left">16</div><div class="cl_right"><span class='text-warning'>136835798.65</span><br>9.00<br><span class='text-success'>1509705984.85</span></div></td><td><div class="cl_left">17</div><div class="cl_right"><span class='text-warning'>45466465.10</span><br>173.00<br><span class='text-success'>500130708.10</span></div></td><td><div class="cl_left">18</div><div class="cl_right"><span class='text-warning'>654880.90</span><br>89.00<br><span class='text-success'>7217404.90</span></div></td><td><div class="cl_left">19</div><div class="cl_right"><span class='text-warning'>8343.10</span><br>0.00<br><span class='text-success'>102309.10</span></div></td>
+</tr>
+
+<tr>
+<td><div class="cl_left">20</div><div class="cl_right"><span class='text-warning'>-1094760.60</span><br>0.00<br><span class='text-success'>12912326.40</span></div></td><td><div class="cl_left">21</div><div class="cl_right"><span class='text-warning'>215.10</span><br>70.90<br><span class='text-success'>9520533.20</span></div></td><td><div class="cl_left">22</div><div class="cl_right"><span class='text-warning'>1065.60</span><br>274.60<br><span class='text-success'>2485353.00</span></div></td><td><div class="cl_left">23</div><div class="cl_right"><span class='text-warning'>0.00</span><br>0.00<br><span class='text-success'>2425835.00</span></div></td><td><div class="cl_left">24</div><div class="cl_right"><span class='text-warning'>10.00</span><br>16.70<br><span class='text-success'>2442599.50</span></div></td><td><div class="cl_left">25</div><div class="cl_right"><span class='text-warning'>5.00</span><br>0.00<br><span class='text-success'>43663.00</span></div></td><td><div class="cl_left">26</div><div class="cl_right"><span class='text-warning'>80894.95</span><br>363.75<br><span class='text-success'>2116056.20</span></div></td>
+</tr>
+
+<tr>
+<td><div class="cl_left">27</div><div class="cl_right"><span class='text-warning'>3410.00</span><br>90909361.70<br><span class='text-success'>1275224225.30</span></div></td><td><div class="cl_left">28</div><div class="cl_right"><span class='text-warning'>260887.20</span><br>11.70<br><span class='text-success'>7781272.50</span></div></td><td><div class="cl_left">29</div><div class="cl_right"><span class='text-warning'>4006.90</span><br>5.00<br><span class='text-success'>299460.00</span></div></td><td><div class="cl_left highlight">30</div><div class="cl_right"><span class='text-warning'>378117.00</span><br>0.00<br><span class='text-success'>7914179.00</span></div></td><td>31</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+</table></div>
+</div>
+<div id="footer">
+  <div class="container">
+    <p class="credit">Copyright &copy; 2017 Simple POS v3.0 - Page rendered in 0.0083 seconds. 
+    <a href="http://tecdiary.net/support/sma-guide/" target="_blank" class="tip" title="Help"><i class="icon-question-sign"></i></a>
+    </p>   
+  </div>
+</div>
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/bootstrap.min.js"></script>
+<script src="http://demo.tecdiary.my/spos/assets/js/bootstrap-prettyfile.js"></script> 
+<script src="http://demo.tecdiary.my/spos/assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" charset="utf-8" src="http://demo.tecdiary.my/spos/assets/media/js/ZeroClipboard.js"></script> 
+<script type="text/javascript" charset="utf-8" src="http://demo.tecdiary.my/spos/assets/media/js/TableTools.min.js"></script> 
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/DT_bootstrap.js"></script>
+   
+</body>
+</html>

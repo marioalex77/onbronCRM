@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<base href="http://demo.tecdiary.my/spos/" />
+<title>Top Products | Simple POS</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" href="http://demo.tecdiary.my/spos/assets/images/favicon.ico" />
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/bootstrap.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/datatables.css" type="text/css">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/dash.css" type="text/css">
+<link rel="stylesheet" href="http://demo.tecdiary.my/spos/assets/css/non-responsive.css" type="text/css">
+<script src="http://demo.tecdiary.my/spos/assets/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.tip').tooltip();
+	$('.alert').click(function(){ $(this).fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); });
+	window.setTimeout(function() { $(".alert").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 8000);
+});
+</script>
+</head>
+<body>
+<div id="wrap">
+<div class="navbar navbar-static-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand">Simple POS</a> 
+    </div>
+    <div class="navbar-collapse collapse navbar-inverse-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown"> <a class="dropdown-toggle tip" data-toggle="dropdown" href="#" data-placement="right" title="Language"><img src="http://demo.tecdiary.my/spos/assets/images/english.png" style="margin-top:-1px" align="middle"></a>
+          <ul class="dropdown-menu" style="min-width: 60px;" role="menu" aria-labelledby="dLabel">
+                        <li><a href="http://demo.tecdiary.my/spos/index.php?module=pos&view=language&lang=english"><img src="http://demo.tecdiary.my/spos/assets/images/english.png" class="language-img"> &nbsp;&nbsp;
+              English              </a></li>
+                      </ul>
+        </li>
+         
+        <li><a href="http://demo.tecdiary.my/spos/index.php?module=settings" class="tip" data-placement="right" title="Home"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li><a href="http://demo.tecdiary.my/spos/index.php?module=settings&view=system_setting" class="tip" data-placement="right" title="Settings"><i class="glyphicon glyphicon-cog"></i></a></li>
+                <li><a href="http://demo.tecdiary.my/spos/index.php?module=pos" class="tip" data-placement="right" title="POS Sale"><i class="glyphicon glyphicon-th-large"></i></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, Admin! <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://demo.tecdiary.my/spos/index.php?module=auth&amp;view=change_password">Change Password</a></li>
+            <li><a href="http://demo.tecdiary.my/spos/index.php?module=auth&amp;view=logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="pull-right">
+                <a href="http://codecanyon.net/item/simple-pos-point-of-sale-made-easy/3947976?ref=tecdiary" class="tip btn btn-default btn-sm pull-left external" style="padding:5px 8px; margin: 5px 5px 5px 5px;" title="<strong>Liked?</strong> Let's Purchase<br><strong>Have Suggestion?</strong> Please send email to contact@tecdiary.com" data-html="true" data-placement="bottom"> Buy Now </a>
+                      
+      <ul class="nav navbar-nav">
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Products          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=products">
+              List Products              </a></li>
+            <li><a href="index.php?module=products&view=add">
+              Add Product              </a></li>
+            <li><a href="index.php?module=products&view=import">
+              Import by CSV              </a></li>
+            <li><a href="index.php?module=products&view=sheet">
+              Print Barcode              </a></li>
+            <li><a href="index.php?module=products&view=labels">
+              Print Lablels              </a></li>    
+              <li class="divider"></li>
+              <li><a href="index.php?module=products&view=categories">
+              List Categories              </a></li>
+            <li><a href="index.php?module=products&view=add_category">
+              Add Category              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Customers          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=customers">
+              List Customers              </a></li>
+            <li><a href="index.php?module=customers&view=add">
+              Add Customer              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Sales          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=sales">
+              List Sales              </a></li>
+            <li><a href="index.php?module=sales&view=holded">
+              List Opened Bills              </a></li>
+          </ul>
+        </li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Reports          <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.php?module=reports&view=daily_sales">
+              Daily Sales              </a></li>
+            <li><a href="index.php?module=reports&view=monthly_sales">
+              Monthly Sales              </a></li>
+            <li><a href="index.php?module=reports">
+              Sales Reports              </a></li>
+              <li class="divider"></li>
+              <li><a href="index.php?module=reports&view=top">
+              Top Products              </a></li>
+              <li><a href="index.php?module=reports&view=products">
+              Products Reports              </a></li>
+          </ul>
+        </li> 
+        </ul>
+          
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container"><script src="http://demo.tecdiary.my/spos//assets/js/sl/highcharts.js"></script>
+<script src="http://demo.tecdiary.my/spos//assets/js/sl/modules/exporting.js"></script>
+  
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+		    	
+        $('#thisMonth').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+			credits: {
+			  	enabled: false
+			},
+            tooltip: {
+				shared: true,
+				headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:4px">{series.name}: </td>' +
+                    '<td style="color:{series.color};padding:4px;text-align:right;"> <b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true,
+				style: {
+					fontSize: '12px',
+					padding: '10px',
+					color: '#000000'
+				}
+            },
+			plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    showInLegend: false
+                }
+            },
+
+            series: [{
+                type: 'pie',
+                name: 'Total Sold',
+                data: [
+                    ['ABC-Wednesday (DESIGNATED_SURVIVOR)', 5664],['aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa (11111111111111111)', 681],['orange (10001)', 253],['HENO (#61)', 200],['قهوة تركي (00112244)', 180],['Testtst (0522152)', 132],['Web Traffic Genius Pro (2749)', 123],['oorr (001)', 114],['Biryani (br)', 111],['Janet Ngugi (0015869)', 108],                ]
+            }]
+        });
+		
+		$('#lastMonth').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+			credits: {
+			  	enabled: false
+			},
+            tooltip: {
+				shared: true,
+				headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:4px">{series.name}: </td>' +
+                    '<td style="color:{series.color};padding:4px;text-align:right;"> <b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true,
+				style: {
+					fontSize: '12px',
+					padding: '10px',
+					color: '#000000'
+				}
+            },
+			plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    showInLegend: false
+                }
+            },
+
+            series: [{
+                type: 'pie',
+                name: 'Total Sold',
+                data: [
+                    ['ABC-Wednesday (DESIGNATED_SURVIVOR)', 5664],['aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa (11111111111111111)', 681],['orange (10001)', 253],['HENO (#61)', 200],['قهوة تركي (00112244)', 180],['Testtst (0522152)', 132],['Web Traffic Genius Pro (2749)', 123],['oorr (001)', 114],['Biryani (br)', 111],['Janet Ngugi (0015869)', 108],                ]
+            }]
+        });
+		
+		$('#lastQ').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+			credits: {
+			  	enabled: false
+			},
+            tooltip: {
+				shared: true,
+				headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:4px">{series.name}: </td>' +
+                    '<td style="color:{series.color};padding:4px;text-align:right;"> <b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true,
+				style: {
+					fontSize: '12px',
+					padding: '10px',
+					color: '#000000'
+				}
+            },
+			plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                    },
+                    showInLegend: false
+                }
+            },
+
+            series: [{
+                type: 'pie',
+                name: 'Total Sold',
+                data: [
+                    ['oorr (001)', 2147585308],['samosa (479)', 35368],['ABC-Wednesday (DESIGNATED_SURVIVOR)', 5664],['sdf (sdf)', 5052],['aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa (11111111111111111)', 687],['هند (112)', 617],['قهوة تركي (00112244)', 549],['Mcdonalds (00001)', 511],['pizza (111)', 464],['Item00133 (00123)', 395],                ]
+            }]
+        });
+		
+		$('#thisYear').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+			credits: {
+			  	enabled: false
+			},
+            tooltip: {
+				shared: true,
+				headerFormat: '<span style="font-size:12px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:4px">{series.name}: </td>' +
+                    '<td style="color:{series.color};padding:4px;text-align:right;"> <b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                useHTML: true,
+				style: {
+					fontSize: '12px',
+					padding: '10px',
+					color: '#000000'
+				}
+            },
+			plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                    },
+                    showInLegend: false
+                }
+            },
+
+            series: [{
+                type: 'pie',
+                name: 'Total Sold',
+                data: [
+                    ['oorr (001)', 2147587682],['Jeans (521)', 123841],['samosa (479)', 35368],['fgdf (12)', 16148],[' ()', 9161],['ring (10088)', 6536],['abc123 (507123)', 5821],['ABC-Wednesday (DESIGNATED_SURVIVOR)', 5664],['sdf (sdf)', 5093],['Product 1 (i7 3770)', 4579],                ]
+            }]
+        });
+		
+    });
+    
+</script>
+
+<div class="clearfix" style="height:20px;"></div>
+
+<div class="row"> 
+<div class="col-md-6">   
+<div class="panel panel-default">
+<div class="panel-heading">This Month (March 2017)</div>
+  <div class="panel-body">
+  <div id="thisMonth" style="height:250px;"></div>
+  </div>
+</div>
+</div>
+  
+<div class="col-md-6">   
+<div class="panel panel-default">
+<div class="panel-heading">Last Month (March 2017)</div>
+  <div class="panel-body">
+  <div id="lastMonth" style="height:250px;"></div>
+  </div>
+</div>
+</div>
+</div>
+
+
+<div class="row"> 
+
+<div class="col-md-6">   
+<div class="panel panel-default">
+<div class="panel-heading">Last 3 Months (From December 2016)</div>
+  <div class="panel-body">
+  <div id="lastQ" style="height:250px;"></div>
+  </div>
+</div>  
+</div>
+ 
+<div class="col-md-6">   
+<div class="panel panel-default">
+<div class="panel-heading">Last 12 Months (From March 2016)</div>
+  <div class="panel-body">
+  <div id="thisYear" style="height:250px;"></div>
+  </div>
+</div>    
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+  <div class="container">
+    <p class="credit">Copyright &copy; 2017 Simple POS v3.0 - Page rendered in 0.1970 seconds. 
+    <a href="http://tecdiary.net/support/sma-guide/" target="_blank" class="tip" title="Help"><i class="icon-question-sign"></i></a>
+    </p>   
+  </div>
+</div>
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/bootstrap.min.js"></script>
+<script src="http://demo.tecdiary.my/spos/assets/js/bootstrap-prettyfile.js"></script> 
+<script src="http://demo.tecdiary.my/spos/assets/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" charset="utf-8" src="http://demo.tecdiary.my/spos/assets/media/js/ZeroClipboard.js"></script> 
+<script type="text/javascript" charset="utf-8" src="http://demo.tecdiary.my/spos/assets/media/js/TableTools.min.js"></script> 
+<script type="text/javascript" src="http://demo.tecdiary.my/spos/assets/js/DT_bootstrap.js"></script>
+   
+</body>
+</html>

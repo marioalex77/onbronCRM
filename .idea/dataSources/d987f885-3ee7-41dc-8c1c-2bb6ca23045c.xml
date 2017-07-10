@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="onbrondb@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+    <root id="1"/>
+    <schema id="2" parent="1" name="onbrondb">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mbcdb"/>
+    <schema id="5" parent="1" name="mbc_factura"/>
+    <schema id="6" parent="1" name="mbc_invoices"/>
+    <schema id="7" parent="1" name="mysql"/>
+    <schema id="8" parent="1" name="performance_schema"/>
+    <schema id="9" parent="1" name="sakila"/>
+    <schema id="10" parent="1" name="test"/>
+    <schema id="11" parent="1" name="world"/>
+    <table id="12" parent="2" name="categoria"/>
+    <table id="13" parent="2" name="cliente"/>
+    <table id="14" parent="2" name="documento"/>
+    <table id="15" parent="2" name="factura"/>
+    <table id="16" parent="2" name="facturaitem"/>
+    <table id="17" parent="2" name="formato"/>
+    <table id="18" parent="2" name="impuesto"/>
+    <table id="19" parent="2" name="inventario"/>
+    <table id="20" parent="2" name="pago"/>
+    <table id="21" parent="2" name="persistentlogins"/>
+    <table id="22" parent="2" name="producto"/>
+    <table id="23" parent="2" name="proveedor"/>
+    <table id="24" parent="2" name="rolusuario"/>
+    <table id="25" parent="2" name="tipofactura"/>
+    <table id="26" parent="2" name="tipopago"/>
+    <table id="27" parent="2" name="usuario"/>
+    <table id="28" parent="2" name="usuariorolusuario"/>
+    <column id="29" parent="12" name="idCategoria">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="30" parent="12" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="31" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idCategoria</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="32" parent="13" name="idCliente">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="33" parent="13" name="nombres">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="13" name="primerApellido">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="13" name="segundoApellido">
+      <Position>4</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="36" parent="13" name="genero">
+      <Position>5</Position>
+      <DataType>varchar(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="37" parent="13" name="email">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="38" parent="13" name="telefono">
+      <Position>7</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <key id="39" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idCliente</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="40" parent="14" name="idDocumento">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="41" parent="14" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="14" name="descripcion">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="43" parent="14" name="tipo">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="14" name="documento">
+      <Position>5</Position>
+      <DataType>longblob|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="45" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idDocumento</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="46" parent="15" name="idFactura">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="47" parent="15" name="idCliente">
+      <Position>2</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="15" name="idTipoFactura">
+      <Position>3</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="15" name="idFormato">
+      <Position>4</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="50" parent="15" name="fecha">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="51" parent="15" name="comentarios">
+      <Position>6</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="52" parent="15" name="totalGrabado">
+      <Position>7</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="53" parent="15" name="totalExento">
+      <Position>8</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="15" name="total">
+      <Position>9</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="55" parent="15" name="FKCliente_idx">
+      <ColNames>idCliente</ColNames>
+    </index>
+    <index id="56" parent="15" name="FKFormato_idx">
+      <ColNames>idFormato</ColNames>
+    </index>
+    <index id="57" parent="15" name="FKTipoFactura_idx">
+      <ColNames>idTipoFactura</ColNames>
+    </index>
+    <key id="58" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idFactura</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="59" parent="15" name="FKCliente">
+      <ColNames>idCliente</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>cliente</RefTableName>
+      <RefColNames>idCliente</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="60" parent="15" name="FKTipoFactura">
+      <ColNames>idTipoFactura</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>tipofactura</RefTableName>
+      <RefColNames>idTipoFactura</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="61" parent="15" name="FKFormato">
+      <ColNames>idFormato</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>formato</RefTableName>
+      <RefColNames>idFormato</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="62" parent="16" name="idFacturaItem">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="63" parent="16" name="idFactura">
+      <Position>2</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="64" parent="16" name="cantidad">
+      <Position>3</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="16" name="idProducto">
+      <Position>4</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="66" parent="16" name="precioUnitario">
+      <Position>5</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="16" name="idImpuesto">
+      <Position>6</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="16" name="impuesto">
+      <Position>7</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="16" name="subTotal">
+      <Position>8</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="16" name="descripcion">
+      <Position>9</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="71" parent="16" name="FKFactura_idx">
+      <ColNames>idFactura</ColNames>
+    </index>
+    <index id="72" parent="16" name="FKImpuesto_idx">
+      <ColNames>idImpuesto</ColNames>
+    </index>
+    <index id="73" parent="16" name="FKProducto_idx">
+      <ColNames>idProducto</ColNames>
+    </index>
+    <key id="74" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idFacturaItem</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="75" parent="16" name="FKFactura">
+      <ColNames>idFactura</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>factura</RefTableName>
+      <RefColNames>idFactura</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="76" parent="16" name="FKProducto">
+      <ColNames>idProducto</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>producto</RefTableName>
+      <RefColNames>idProducto</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="77" parent="16" name="FKImpuesto">
+      <ColNames>idImpuesto</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>impuesto</RefTableName>
+      <RefColNames>idImpuesto</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="78" parent="17" name="idFormato">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="79" parent="17" name="descripcion">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="80" parent="17" name="signoMoneda">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="81" parent="17" name="encabezado">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="82" parent="17" name="subtitulo">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="83" parent="17" name="encabezadoDetalle">
+      <Position>6</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="84" parent="17" name="leyendaDetalle">
+      <Position>7</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="85" parent="17" name="tipodePago">
+      <Position>8</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="86" parent="17" name="nombreEmpresa">
+      <Position>9</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="87" parent="17" name="nit">
+      <Position>10</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="88" parent="17" name="lenguaje">
+      <Position>11</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="89" parent="17" name="codigoMoneda">
+      <Position>12</Position>
+      <DataType>varchar(25)|0</DataType>
+    </column>
+    <column id="90" parent="17" name="posicionMoneda">
+      <Position>13</Position>
+      <DataType>varchar(25)|0</DataType>
+    </column>
+    <column id="91" parent="17" name="estado">
+      <Position>14</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <key id="92" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idFormato</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="93" parent="18" name="idImpuesto">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="94" parent="18" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="95" parent="18" name="porcentaje">
+      <Position>3</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="96" parent="18" name="descripcion">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="97" parent="18" name="estado">
+      <Position>5</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="98" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idImpuesto</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="99" parent="19" name="idInventario">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="100" parent="19" name="idProducto">
+      <Position>2</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="101" parent="19" name="cantidad">
+      <Position>3</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="19" name="costo">
+      <Position>4</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="103" parent="19" name="fechaProduccion">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="104" parent="19" name="fechaVencimiento">
+      <Position>6</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="105" parent="19" name="comentario">
+      <Position>7</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="106" parent="19" name="FKProductos_idx">
+      <ColNames>idProducto</ColNames>
+    </index>
+    <key id="107" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idInventario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="108" parent="19" name="FKProductos">
+      <ColNames>idProducto</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>producto</RefTableName>
+      <RefColNames>idProducto</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="109" parent="20" name="idpago">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="110" parent="20" name="idFactura">
+      <Position>2</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="20" name="idTipoPago">
+      <Position>3</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="112" parent="20" name="monto">
+      <Position>4</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="113" parent="20" name="fecha">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="114" parent="20" name="referenciaExterna">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="115" parent="20" name="comentario">
+      <Position>7</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="116" parent="20" name="FKPagoFactura_idx">
+      <ColNames>idFactura</ColNames>
+    </index>
+    <index id="117" parent="20" name="FKPagoTipoPago_idx">
+      <ColNames>idTipoPago</ColNames>
+    </index>
+    <key id="118" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idpago</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="119" parent="20" name="FKPagoFactura">
+      <ColNames>idFactura</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>factura</RefTableName>
+      <RefColNames>idFactura</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="120" parent="20" name="FKPagoTipoPago">
+      <ColNames>idTipoPago</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>tipopago</RefTableName>
+      <RefColNames>idTipoPago</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="121" parent="21" name="correo">
+      <Position>1</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="122" parent="21" name="series">
+      <Position>2</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="123" parent="21" name="token">
+      <Position>3</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="124" parent="21" name="ultimoIngreso">
+      <Position>4</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="125" parent="21" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>series</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="126" parent="22" name="idProducto">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="127" parent="22" name="codigo">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="128" parent="22" name="nombre">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="129" parent="22" name="idCategoria">
+      <Position>4</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="130" parent="22" name="idImpuesto">
+      <Position>5</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="131" parent="22" name="idProveedor">
+      <Position>6</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="132" parent="22" name="precioUnitario">
+      <Position>7</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="133" parent="22" name="precioCompra">
+      <Position>8</Position>
+      <DataType>decimal(25,6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="134" parent="22" name="orden">
+      <Position>9</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="135" parent="22" name="descripcion">
+      <Position>10</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="136" parent="22" name="estado">
+      <Position>11</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="137" parent="22" name="visible">
+      <Position>12</Position>
+      <DataType>varchar(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="138" parent="22" name="idDocumento">
+      <Position>13</Position>
+      <DataType>int(11) unsigned|0</DataType>
+    </column>
+    <index id="139" parent="22" name="FKProductoCategoria_idx">
+      <ColNames>idCategoria</ColNames>
+    </index>
+    <index id="140" parent="22" name="FKProductoImagen_idx">
+      <ColNames>idDocumento</ColNames>
+    </index>
+    <index id="141" parent="22" name="FKProductoImpuesto_idx">
+      <ColNames>idImpuesto</ColNames>
+    </index>
+    <index id="142" parent="22" name="FKProductoProveedor_idx">
+      <ColNames>idProveedor</ColNames>
+    </index>
+    <index id="143" parent="22" name="idDocumento_UNIQUE">
+      <ColNames>idDocumento</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="144" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idProducto</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="145" parent="22" name="idDocumento_UNIQUE">
+      <ColNames>idDocumento</ColNames>
+      <UnderlyingIndexName>idDocumento_UNIQUE</UnderlyingIndexName>
+    </key>
+    <foreign-key id="146" parent="22" name="FKProductoCategoria">
+      <ColNames>idCategoria</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>categoria</RefTableName>
+      <RefColNames>idCategoria</RefColNames>
+    </foreign-key>
+    <foreign-key id="147" parent="22" name="FKProductoImpuesto">
+      <ColNames>idImpuesto</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>impuesto</RefTableName>
+      <RefColNames>idImpuesto</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="148" parent="22" name="FKProductoProveedor">
+      <ColNames>idProveedor</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>proveedor</RefTableName>
+      <RefColNames>idProveedor</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="149" parent="22" name="FKProductoDocuemnto">
+      <ColNames>idDocumento</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>documento</RefTableName>
+      <RefColNames>idDocumento</RefColNames>
+    </foreign-key>
+    <column id="150" parent="23" name="idProveedor">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="151" parent="23" name="nombre">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="152" parent="23" name="nrc">
+      <Position>3</Position>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="153" parent="23" name="nit">
+      <Position>4</Position>
+      <DataType>varchar(17)|0</DataType>
+    </column>
+    <column id="154" parent="23" name="email">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="155" parent="23" name="telefono">
+      <Position>6</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <index id="156" parent="23" name="nit_UNIQUE">
+      <ColNames>nit</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="157" parent="23" name="nrc_UNIQUE">
+      <ColNames>nrc</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="158" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idProveedor</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="159" parent="23" name="nrc_UNIQUE">
+      <ColNames>nrc</ColNames>
+      <UnderlyingIndexName>nrc_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="160" parent="23" name="nit_UNIQUE">
+      <ColNames>nit</ColNames>
+      <UnderlyingIndexName>nit_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="161" parent="24" name="idRolUsuario">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="162" parent="24" name="tipo">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="163" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idRolUsuario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="164" parent="25" name="idTipoFactura">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="165" parent="25" name="descripción">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="166" parent="25" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idTipoFactura</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="167" parent="26" name="idTipoPago">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="168" parent="26" name="descripcion">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="169" parent="26" name="estado">
+      <Position>3</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="170" parent="26" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idTipoPago</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="171" parent="27" name="idUsuario">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="172" parent="27" name="correo">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="173" parent="27" name="password">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="174" parent="27" name="nombres">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="175" parent="27" name="primerApellido">
+      <Position>5</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="176" parent="27" name="segundoApellido">
+      <Position>6</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="177" parent="27" name="genero">
+      <Position>7</Position>
+      <DataType>varchar(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="178" parent="27" name="estado">
+      <Position>8</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="179" parent="27" name="correo_UNIQUE">
+      <ColNames>correo</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="180" parent="27" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idUsuario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="181" parent="27" name="correo_UNIQUE">
+      <ColNames>correo</ColNames>
+      <UnderlyingIndexName>correo_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="182" parent="28" name="idUsuario">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="183" parent="28" name="idRolUsuario">
+      <Position>2</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="184" parent="28" name="FK_RolUsuario_idx">
+      <ColNames>idRolUsuario</ColNames>
+    </index>
+    <key id="185" parent="28" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idUsuario
+idRolUsuario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="186" parent="28" name="FK_Usuario">
+      <ColNames>idUsuario</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>usuario</RefTableName>
+      <RefColNames>idUsuario</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="187" parent="28" name="FK_RolUsuario">
+      <ColNames>idRolUsuario</ColNames>
+      <RefSchemaName>onbrondb</RefSchemaName>
+      <RefTableName>rolusuario</RefTableName>
+      <RefColNames>idRolUsuario</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+  </database-model>
+</dataSource>
