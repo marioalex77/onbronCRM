@@ -44,13 +44,6 @@ INSERT INTO rolusuario(tipo)
 VALUES ('SUPER');
 COMMIT;
 
-DROP TABLE IF EXISTS `categoria`;
-CREATE TABLE `categoria` (
-`idCategoria` int(11) unsigned NOT NULL AUTO_INCREMENT,
-`nombre` varchar(255) NOT NULL,
-PRIMARY KEY (`idCategoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `persistentlogins`;
 CREATE TABLE `persistentlogins` (
   `correo` varchar(255) NOT NULL,
@@ -73,16 +66,33 @@ CREATE TABLE `proveedor` (
   UNIQUE KEY `nit_UNIQUE` (`nit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tipoimpuesto`;
+CREATE TABLE `tipoimpuesto` (
+  `idTipoImpuesto` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idTipoImpuesto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tipoimpuesto(descripcion)
+VALUES ('PORCENTAJE');
+INSERT INTO tipoimpuesto(descripcion)
+VALUES ('VALOR');
+COMMIT;
+
+
 DROP TABLE IF EXISTS `impuesto`;
 CREATE TABLE `impuesto` (
   `idImpuesto` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `porcentaje` decimal(25,6) NOT NULL,
+  `valor` decimal(25,6) NOT NULL,
   `descripcion` varchar(50) DEFAULT NULL,
   `estado` varchar(30) NOT NULL,
+  `idTipoImpuesto` int(11) unsigned NOT NULL,
   PRIMARY KEY (`idImpuesto`),
-  CHECK(`estado` IN ("ACTIVO","INACTIVO","BORRADO","BLOQUEADO"))
+  KEY `FKImpuestoTipoImpuesto_idx` (`idTipoImpuesto`),
+  CONSTRAINT `FKImpuestoTipoImpuesto` FOREIGN KEY (`idTipoImpuesto`) REFERENCES `tipoimpuesto` (`idTipoImpuesto`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `documento`;
 CREATE TABLE `documento` (
@@ -94,6 +104,31 @@ CREATE TABLE `documento` (
   PRIMARY KEY (`idDocumento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tipoproducto`;
+CREATE TABLE `tipoproducto` (
+  `idTipoProducto` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(30) NOT NULL,
+  PRIMARY KEY (`idTipoProducto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tipoproducto(descripcion)
+VALUES ('TERMINADO');
+INSERT INTO tipoproducto(descripcion)
+VALUES ('MATERIA PRIMA');
+INSERT INTO tipoproducto(descripcion)
+VALUES ('INTERMEDIO');
+COMMIT;
+
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE `categoria` (
+  `idCategoria` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `idTipoProducto` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`idCategoria`),
+  KEY `FKCategoriaTipoProducto_idx` (`idTipoProducto`),
+  CONSTRAINT `FKCategoriaTipoProducto` FOREIGN KEY (`idTipoProducto`) REFERENCES `tipoproducto` (`idTipoProducto`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
@@ -103,25 +138,29 @@ CREATE TABLE `producto` (
   `idCategoria` int(10) unsigned NOT NULL,
   `idImpuesto` int(10) unsigned NOT NULL,
   `idProveedor` int(11) unsigned NOT NULL,
+  `idTipoProducto` int(11) unsigned NOT NULL,
   `precioUnitario` decimal(25,6) NOT NULL,
-  `precioCompra` decimal(25,6) NOT NULL,
   `orden` int(11) NOT NULL,
   `descripcion` text,
   `estado` varchar(30) NOT NULL,
   `visible` varchar(1) NOT NULL,
   `idDocumento` int(11) unsigned DEFAULT NULL,
+  `fechaDesde` datetime NOT NULL,
+  `fechaHasta` datetime DEFAULT NULL,
   PRIMARY KEY (`idProducto`),
   UNIQUE KEY `idDocumento_UNIQUE` (`idDocumento`),
   KEY `FKProductoImpuesto_idx` (`idImpuesto`),
   KEY `FKProductoProveedor_idx` (`idProveedor`),
   KEY `FKProductoImagen_idx` (`idDocumento`),
   KEY `FKProductoCategoria_idx` (`idCategoria`),
-  CONSTRAINT `FKProductoCategoria` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FKProductoDocuemnto` FOREIGN KEY (`idDocumento`) REFERENCES `documento` (`idDocumento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `FKProductoTipoProducto_idx` (`idTipoProducto`),
+  CONSTRAINT `FKProductoCategoria` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON UPDATE CASCADE,
+  CONSTRAINT `FKProductoDocuemnto` FOREIGN KEY (`idDocumento`) REFERENCES `documento` (`idDocumento`) ON UPDATE CASCADE,
   CONSTRAINT `FKProductoImpuesto` FOREIGN KEY (`idImpuesto`) REFERENCES `impuesto` (`idImpuesto`) ON UPDATE CASCADE,
   CONSTRAINT `FKProductoProveedor` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`) ON UPDATE CASCADE,
-  CHECK(`estado` IN ("ACTIVO","INACTIVO","BORRADO","BLOQUEADO"))
+  CONSTRAINT `FKProductoTipoProducto` FOREIGN KEY (`idTipoProducto`) REFERENCES `tipoproducto` (`idTipoProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 DROP TABLE IF EXISTS `cliente`;
@@ -133,7 +172,69 @@ CREATE TABLE `cliente` (
   `genero` varchar(1) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `telefono` varchar(10) DEFAULT NULL,
+  `pin` varchar(6) NOT NULL DEFAULT '000000',
+  `estado` varchar(30) DEFAULT NULL,
+  `verificador` varchar(6) DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tipodireccion` (
+  `idtipodireccion` int(11) unsigned NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idtipodireccion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tipodireccion(descripcion)
+VALUES ('RESIDENCIA');
+INSERT INTO tipodireccion(descripcion)
+VALUES ('TRABAJO');
+INSERT INTO tipodireccion(descripcion)
+VALUES ('OTRO');
+COMMIT;
+
+DROP TABLE IF EXISTS `direccion`;
+CREATE TABLE `direccion` (
+  `idDireccion` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idCliente` int(11) unsigned NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `referencia` varchar(255) DEFAULT NULL,
+  `departamento` int(11) NOT NULL,
+  `municipio` int(11) DEFAULT NULL,
+  `telefono` varchar(10) NOT NULL,
+  `longitud` decimal(25,6) NOT NULL,
+  `latitud` decimal(25,6) NOT NULL,
+  `idTipoDireccion` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`idDireccion`),
+  KEY `FKDireccionesCliente_idx` (`idCliente`),
+  KEY `FKDireccionTipoDireccion_idx` (`idTipoDireccion`),
+  CONSTRAINT `FKDireccionTipoDireccion` FOREIGN KEY (`idTipoDireccion`) REFERENCES `tipodireccion` (`idtipodireccion`) ON UPDATE CASCADE,
+  CONSTRAINT `FKDireccionesCliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tipolealtad`;
+CREATE TABLE `tipolealtad` (
+  `idTipoLealtad` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idTipoLealtad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tipolealtad(descripcion)
+VALUES ('PUNTOS');
+INSERT INTO tipolealtad(descripcion)
+VALUES ('CUPON');
+COMMIT;
+
+DROP TABLE IF EXISTS `lealtad`;
+CREATE TABLE `lealtad` (
+  `idLealtad` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idCliente` int(11) unsigned NOT NULL,
+  `idTipoLealtad` int(11) unsigned NOT NULL,
+  `valor` decimal(25,6) NOT NULL,
+  PRIMARY KEY (`idLealtad`),
+  KEY `FKLealtadCliente_idx` (`idCliente`),
+  KEY `FKLealtadTipoLealtad_idx` (`idTipoLealtad`),
+  CONSTRAINT `FKLealtadCliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON UPDATE CASCADE,
+  CONSTRAINT `FKLealtadTipoLealtad` FOREIGN KEY (`idTipoLealtad`) REFERENCES `tipolealtad` (`idTipoLealtad`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tipopago`;
@@ -145,12 +246,60 @@ CREATE TABLE `tipopago` (
   CHECK(`estado` IN ("ACTIVO","INACTIVO","BORRADO","BLOQUEADO"))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO tipopago(descripcion)
+VALUES ('EFECTIVO');
+INSERT INTO tipopago(descripcion)
+VALUES ('LEALTAD');
+INSERT INTO tipopago(descripcion)
+VALUES ('CREDITO');
+INSERT INTO tipopago(descripcion)
+VALUES ('PREPAGO');
+COMMIT;
+
 DROP TABLE IF EXISTS `tipofactura`;
 CREATE TABLE `tipofactura` (
   `idTipoFactura` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descripción` varchar(255) NOT NULL,
   PRIMARY KEY (`idTipoFactura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tipofactura(descripcion)
+VALUES ('PRESUPUESTO COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('PROFORMA COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('PEDIDO COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('NOTA ENTREGA COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('CONSUMIDOR FINAL COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('CREDITO FISCAL COMPRA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('PRESUPUESTO VENTA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('PROFORMA VENTA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('PEDIDO VENTA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('NOTA ENTREGA VENTA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('CONSUMIDOR FINAL VENTA');
+INSERT INTO tipofactura(descripcion)
+VALUES ('CREDITO FISCAL VENTA');
+COMMIT;
+
+
+DROP TABLE IF EXISTS `estadotipofactura`;
+CREATE TABLE `estadotipofactura` (
+  `idEstadoTipoFactura` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `idTipoFactura` int(11) unsigned NOT NULL,
+  `descripcion` varchar(30) NOT NULL,
+  PRIMARY KEY (`idEstadoTipoFactura`),
+  KEY `FKTipoFacturaEstado_idx` (`idTipoFactura`),
+  CONSTRAINT `FKTipoFacturaEstado` FOREIGN KEY (`idTipoFactura`) REFERENCES `tipofactura` (`idTipoFactura`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `formato`;
 CREATE TABLE `formato` (
@@ -182,14 +331,25 @@ CREATE TABLE `factura` (
   `totalGrabado` decimal(25,6) NOT NULL,
   `totalExento` decimal(25,6) NOT NULL,
   `total` decimal(25,6) NOT NULL,
+  `numero` int(11) unsigned NOT NULL,
+  `idDireccion` int(11) unsigned NOT NULL,
+  `resumenDetalle` tinytext,
+  `idEstadoTipoFactura` int(11) unsigned NOT NULL,
+  `idFactRelacionada` int(11) unsigned DEFAULT NULL,
+  `idFactRectificada` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`idFactura`),
   KEY `FKCliente_idx` (`idCliente`),
   KEY `FKTipoFactura_idx` (`idTipoFactura`),
   KEY `FKFormato_idx` (`idFormato`),
+  KEY `FKDireccionFactura_idx` (`idCliente`,`idDireccion`),
+  KEY `FKEstadoFactura_idx` (`idTipoFactura`,`idEstadoTipoFactura`),
   CONSTRAINT `FKCliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON UPDATE CASCADE,
+  CONSTRAINT `FKDireccionFactura` FOREIGN KEY (`idCliente`, `idDireccion`) REFERENCES `direccion` (`idCliente`, `idDireccion`) ON UPDATE CASCADE,
+  CONSTRAINT `FKEstadoFactura` FOREIGN KEY (`idTipoFactura`, `idEstadoTipoFactura`) REFERENCES `estadotipofactura` (`idTipoFactura`, `idEstadoTipoFactura`) ON UPDATE CASCADE,
   CONSTRAINT `FKFormato` FOREIGN KEY (`idFormato`) REFERENCES `formato` (`idFormato`) ON UPDATE CASCADE,
   CONSTRAINT `FKTipoFactura` FOREIGN KEY (`idTipoFactura`) REFERENCES `tipofactura` (`idTipoFactura`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `facturaitem`;
 CREATE TABLE `facturaitem` (
@@ -225,6 +385,20 @@ CREATE TABLE `inventario` (
   CONSTRAINT `FKProductos` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `inventariodetalle`;
+CREATE TABLE `inventariodetalle` (
+  `idInventarioDetalle` int(11) unsigned NOT NULL,
+  `idInventario` int(11) unsigned NOT NULL,
+  `IdFacturaItem` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`idInventarioDetalle`),
+  KEY `FKDetalleInvenario_idx` (`idInventario`),
+  KEY `FKDetalleInventarioFacturaItem_idx` (`IdFacturaItem`),
+  CONSTRAINT `FKDetalleInvenario` FOREIGN KEY (`idInventario`) REFERENCES `inventario` (`idInventario`) ON UPDATE CASCADE,
+  CONSTRAINT `FKDetalleInventarioFacturaItem` FOREIGN KEY (`IdFacturaItem`) REFERENCES `facturaitem` (`idFacturaItem`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 DROP TABLE IF EXISTS `pago`;
 CREATE TABLE `pago` (
   `idpago` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -234,9 +408,23 @@ CREATE TABLE `pago` (
   `fecha` datetime NOT NULL,
   `referenciaExterna` varchar(255) DEFAULT NULL,
   `comentario` text,
+  `signo` varchar(1) NOT NULL,
+  `cuenta` varchar(12) NOT NULL,
   PRIMARY KEY (`idpago`),
   KEY `FKPagoFactura_idx` (`idFactura`),
   KEY `FKPagoTipoPago_idx` (`idTipoPago`),
   CONSTRAINT `FKPagoFactura` FOREIGN KEY (`idFactura`) REFERENCES `factura` (`idFactura`) ON UPDATE CASCADE,
   CONSTRAINT `FKPagoTipoPago` FOREIGN KEY (`idTipoPago`) REFERENCES `tipopago` (`idTipoPago`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `zonacobertura`;
+CREATE TABLE `zonacobertura` (
+  `idZonaCobertura` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  `LatitudIni` decimal(25,6) NOT NULL,
+  `LongitudIni` decimal(25,6) NOT NULL,
+  `LatitudFin` decimal(25,6) NOT NULL,
+  `LongitudFin` decimal(25,6) NOT NULL,
+  PRIMARY KEY (`idZonaCobertura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
