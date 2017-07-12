@@ -2,6 +2,7 @@ package com.maguzman.onbron.beans;
 /**
  * Created by maguzman on 27/04/2017.
  */
+import com.maguzman.onbron.enumeraciones.Estado;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;

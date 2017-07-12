@@ -1,6 +1,6 @@
 package com.maguzman.onbron.pos.controller;
 
-import com.maguzman.onbron.beans.Estado;
+import com.maguzman.onbron.enumeraciones.Estado;
 import com.maguzman.onbron.beans.Impuesto;
 import com.maguzman.onbron.service.ImpuestoService;
 import org.apache.logging.log4j.LogManager;

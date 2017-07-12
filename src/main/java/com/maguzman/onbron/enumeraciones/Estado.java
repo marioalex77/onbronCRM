@@ -1,4 +1,4 @@
-package com.maguzman.onbron.beans;
+package com.maguzman.onbron.enumeraciones;
 
 /**
  * Created by maguzman on 11/05/2017.

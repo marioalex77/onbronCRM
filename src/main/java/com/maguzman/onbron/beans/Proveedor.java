@@ -3,6 +3,7 @@ package com.maguzman.onbron.beans;
  * Created by maguzman on 27/04/2017.
  */
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
@@ -21,11 +22,15 @@ public class Proveedor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProveedor;
     @NotEmpty
-    @Size(min=3, max=255)
+    @Size(max=255)
     private String nombre;
+    @Size(max=15)
     private String nrc;// Numero de registro de contribuyente
+    @Size(max=17)
     private String nit;
+    @Email
     private String email;
+    @Size(max=10)
     private String telefono;
 
     public Proveedor() {

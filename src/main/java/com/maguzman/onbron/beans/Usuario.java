@@ -1,5 +1,7 @@
 package com.maguzman.onbron.beans;
 
+import com.maguzman.onbron.enumeraciones.Estado;
+import com.maguzman.onbron.enumeraciones.Genero;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -24,6 +26,7 @@ public class Usuario implements Serializable {
     private Integer idUsuario;
 
     @NotEmpty
+    @Email
     @Column(name = "correo")
     private String correo;
 
@@ -35,14 +38,17 @@ public class Usuario implements Serializable {
     private String rePassword;
 
     @NotEmpty
+    @Size(max = 100)
     @Column(name = "nombres")
     private String nombres;
 
     @NotEmpty
+    @Size (max=45)
     @Column(name = "primerApellido")
     private String primerApellido;
 
     @Column(name = "segundoApellido")
+    @Size(max=45)
     private String segundoApellido;
 
     @NotEmpty

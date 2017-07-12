@@ -3,14 +3,11 @@ package com.maguzman.onbron.beans;
  * Created by maguzman on 27/04/2017.
  */
 
+import com.maguzman.onbron.enumeraciones.Estado;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
@@ -27,23 +24,25 @@ public class Impuesto implements Serializable {
     @Size (min=3, max=50)
     private String nombre;
     @NotEmpty
-    @Digits(integer = 2, fraction = 3, message = "El valor no puede ser mayor a 99.999")
-    private double porcentaje;
+    private double valor;
     private String descripcion;
     @NotEmpty
     private String estado;
+    @ManyToOne
+    @JoinColumn(name="idTipoImpuesto")
+    private TipoImpuesto tipoImpuesto;
 
     public Impuesto() {
         this.idImpuesto=0;
         this.nombre = "";
-        this.porcentaje = 0.00;
+        this.valor = 0.00;
         this.descripcion = "";
         this.estado = Estado.ACTIVO.getEstado();
     }
 
-    public Impuesto(String nombre, double porcentaje, String descripcion, String estado) {
+    public Impuesto(String nombre, double valor, String descripcion, String estado) {
         this.nombre = nombre;
-        this.porcentaje = porcentaje;
+        this.valor = valor;
         this.descripcion = descripcion;
         this.estado = estado;
     }
@@ -62,14 +61,6 @@ public class Impuesto implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public double getPorcentaje() {
-        return porcentaje;
-    }
-
-    public void setPorcentaje(double porcentaje) {
-        this.porcentaje = porcentaje;
     }
 
     public String getNombre() {
@@ -92,6 +83,22 @@ public class Impuesto implements Serializable {
         return serialVersionUID;
     }
 
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public TipoImpuesto getTipoImpuesto() {
+        return tipoImpuesto;
+    }
+
+    public void setTipoImpuesto(TipoImpuesto tipoImpuesto) {
+        this.tipoImpuesto = tipoImpuesto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,7 +116,7 @@ public class Impuesto implements Serializable {
         long temp;
         result = idImpuesto;
         result = 31 * result + nombre.hashCode();
-        temp = Double.doubleToLongBits(porcentaje);
+        temp = Double.doubleToLongBits(valor);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + descripcion.hashCode();
         result = 31 * result + estado.hashCode();
@@ -121,7 +128,7 @@ public class Impuesto implements Serializable {
         return "Impuesto{" +
                 "idImpuesto=" + idImpuesto +
                 ", nombre='" + nombre + '\'' +
-                ", porcentaje=" + porcentaje +
+                ", valor=" + valor +
                 ", descripcion='" + descripcion + '\'' +
                 ", estado='" + estado + '\'' +
                 '}';

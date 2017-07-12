@@ -1,6 +1,6 @@
 package com.maguzman.onbron.security.controller;
 
-import com.maguzman.onbron.beans.Estado;
+import com.maguzman.onbron.enumeraciones.Estado;
 import com.maguzman.onbron.beans.RolUsuario;
 import com.maguzman.onbron.beans.Usuario;
 import com.maguzman.onbron.service.RolUsuarioService;

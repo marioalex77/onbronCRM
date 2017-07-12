@@ -79,7 +79,6 @@ INSERT INTO tipoimpuesto(descripcion)
 VALUES ('VALOR');
 COMMIT;
 
-
 DROP TABLE IF EXISTS `impuesto`;
 CREATE TABLE `impuesto` (
   `idImpuesto` int(11) unsigned NOT NULL AUTO_INCREMENT,

@@ -1,5 +1,6 @@
 package com.maguzman.onbron.beans;
 
+import com.maguzman.onbron.enumeraciones.TipoRolUsuario;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;

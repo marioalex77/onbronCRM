@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by maguzman on 23/05/2017.
  */
 @Entity
-@Table(name="tipoFactura")
+@Table(name="tipofactura")
 public class TipoFactura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -18,15 +18,15 @@ public class TipoFactura implements Serializable {
     private Integer idTipoFactura;
     @NotEmpty
     @Size(max=255)
-    private String descripción;
+    private String descripcion;
 
     public TipoFactura() {
         this.idTipoFactura=0;
-        this.descripción="";
+        this.descripcion="";
     }
 
     public TipoFactura(String descripción) {
-        this.descripción = descripción;
+        this.descripcion = descripción;
     }
 
     public static long getSerialVersionUID() {
@@ -38,7 +38,7 @@ public class TipoFactura implements Serializable {
     }
 
     public String getDescripción() {
-        return descripción;
+        return descripcion;
     }
 
     public void setIdTipoFactura(Integer idTipoFactura) {
@@ -46,7 +46,7 @@ public class TipoFactura implements Serializable {
     }
 
     public void setDescripción(String descripción) {
-        this.descripción = descripción;
+        this.descripcion = descripción;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TipoFactura implements Serializable {
     public String toString() {
         return "TipoFactura{" +
                 "idTipoFactura=" + idTipoFactura +
-                ", descripción='" + descripción + '\'' +
+                ", descripción='" + descripcion + '\'' +
                 '}';
     }
 }
