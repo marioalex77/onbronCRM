@@ -178,8 +178,9 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tipodireccion`;
 CREATE TABLE `tipodireccion` (
-  `idtipodireccion` int(11) unsigned NOT NULL,
+  `idtipodireccion` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`idtipodireccion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -246,20 +247,20 @@ CREATE TABLE `tipopago` (
   CHECK(`estado` IN ("ACTIVO","INACTIVO","BORRADO","BLOQUEADO"))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO tipopago(descripcion)
-VALUES ('EFECTIVO');
-INSERT INTO tipopago(descripcion)
-VALUES ('LEALTAD');
-INSERT INTO tipopago(descripcion)
-VALUES ('CREDITO');
-INSERT INTO tipopago(descripcion)
-VALUES ('PREPAGO');
+INSERT INTO tipopago(`descripcion`, `estado`)
+VALUES ('EFECTIVO','ACTIVO');
+INSERT INTO tipopago(`descripcion`, `estado`)
+VALUES ('LEALTAD','ACTIVO');
+INSERT INTO tipopago(`descripcion`, `estado`)
+VALUES ('CREDITO','ACTIVO');
+INSERT INTO tipopago(`descripcion`, `estado`)
+VALUES ('PREPAGO','ACTIVO');
 COMMIT;
 
 DROP TABLE IF EXISTS `tipofactura`;
 CREATE TABLE `tipofactura` (
   `idTipoFactura` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `descripción` varchar(255) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
   PRIMARY KEY (`idTipoFactura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -397,8 +398,6 @@ CREATE TABLE `inventariodetalle` (
   CONSTRAINT `FKDetalleInventarioFacturaItem` FOREIGN KEY (`IdFacturaItem`) REFERENCES `facturaitem` (`idFacturaItem`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
 DROP TABLE IF EXISTS `pago`;
 CREATE TABLE `pago` (
   `idpago` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -416,7 +415,6 @@ CREATE TABLE `pago` (
   CONSTRAINT `FKPagoFactura` FOREIGN KEY (`idFactura`) REFERENCES `factura` (`idFactura`) ON UPDATE CASCADE,
   CONSTRAINT `FKPagoTipoPago` FOREIGN KEY (`idTipoPago`) REFERENCES `tipopago` (`idTipoPago`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `zonacobertura`;
 CREATE TABLE `zonacobertura` (
