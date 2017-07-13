@@ -92,7 +92,6 @@ CREATE TABLE `impuesto` (
   CONSTRAINT `FKImpuestoTipoImpuesto` FOREIGN KEY (`idTipoImpuesto`) REFERENCES `tipoimpuesto` (`idTipoImpuesto`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 DROP TABLE IF EXISTS `documento`;
 CREATE TABLE `documento` (
   `idDocumento` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -101,6 +100,17 @@ CREATE TABLE `documento` (
   `tipo` varchar(100) NOT NULL,
   `documento` longblob NOT NULL,
   PRIMARY KEY (`idDocumento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `imagen`;
+CREATE TABLE `imagen` (
+  `idImagen` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `tipoObjeto` varchar(45) NOT NULL,
+  `tipoArchivo` varchar(45) NOT NULL,
+  `stream` tinytext NOT NULL,
+  PRIMARY KEY (`idImagen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `tipoproducto`;
@@ -143,24 +153,21 @@ CREATE TABLE `producto` (
   `descripcion` text,
   `estado` varchar(30) NOT NULL,
   `visible` varchar(1) NOT NULL,
-  `idDocumento` int(11) unsigned DEFAULT NULL,
+  `idImagen` int(11) unsigned DEFAULT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime DEFAULT NULL,
   PRIMARY KEY (`idProducto`),
-  UNIQUE KEY `idDocumento_UNIQUE` (`idDocumento`),
   KEY `FKProductoImpuesto_idx` (`idImpuesto`),
   KEY `FKProductoProveedor_idx` (`idProveedor`),
-  KEY `FKProductoImagen_idx` (`idDocumento`),
+  KEY `FKProductoImagen_idx` (`idImagen`),
   KEY `FKProductoCategoria_idx` (`idCategoria`),
   KEY `FKProductoTipoProducto_idx` (`idTipoProducto`),
   CONSTRAINT `FKProductoCategoria` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON UPDATE CASCADE,
-  CONSTRAINT `FKProductoDocuemnto` FOREIGN KEY (`idDocumento`) REFERENCES `documento` (`idDocumento`) ON UPDATE CASCADE,
+  CONSTRAINT `FKProductoImagen` FOREIGN KEY (`idImagen`) REFERENCES `imagen` (`idImagen`) ON UPDATE CASCADE,
   CONSTRAINT `FKProductoImpuesto` FOREIGN KEY (`idImpuesto`) REFERENCES `impuesto` (`idImpuesto`) ON UPDATE CASCADE,
   CONSTRAINT `FKProductoProveedor` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`) ON UPDATE CASCADE,
-  CONSTRAINT `FKProductoTipoProducto` FOREIGN KEY (`idTipoProducto`) REFERENCES `tipoproducto` (`idTipoProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FKProductoTipoProducto` FOREIGN KEY (`idTipoProducto`) REFERENCES `tipoproducto` (`idTipoProducto`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (

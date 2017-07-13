@@ -3,6 +3,8 @@ package com.maguzman.onbron.beans;
  * Created by maguzman on 27/04/2017.
  */
 import com.maguzman.onbron.enumeraciones.Estado;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -21,22 +23,10 @@ public class Producto implements Serializable{
     @Id
     @GeneratedValue
     private int idProducto;
-    @Size(min=3, max=255)
+    @Size(max=255)
     private String codigo;
-    @Size(min=3, max=255)
+    @Size(max=255)
     private String nombre;
-    @Digits(integer = 8, fraction = 2, message = "El valor no puede ser mayor a 99999999.99")
-    private double precioUnitario;
-    @Digits(integer = 8, fraction = 2, message = "El valor no puede ser mayor a 99999999.99")
-    private double precioCompra;
-    @Digits(integer = 11, fraction = 0)
-    private int orden;
-    private String descripcion;
-    private String estado = Estado.ACTIVO.getEstado();
-    private char visible;
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="idDocumento")
-    private Documento documento;
     @ManyToOne
     @JoinColumn(name="idCategoria")
     private Categoria categoria;
@@ -46,100 +36,172 @@ public class Producto implements Serializable{
     @ManyToOne
     @JoinColumn(name="idProveedor")
     private Proveedor proveedor;
+    @ManyToOne
+    @JoinColumn(name="idTipoProducto")
+    private TipoProducto tipoProducto;
+    @Digits(integer = 8, fraction = 2, message = "El valor no puede ser mayor a 99999999.99")
+    private double precioUnitario;
+    private int orden;
+    private String descripcion;
+    private String estado = Estado.ACTIVO.getEstado();
+    private char visible;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="idImagen")
+    private Imagen imagen;
+    @DateTimeFormat
+    private DateTime fechaDesde;
+    @DateTimeFormat
+    private DateTime fechaHasta;
+
     @Transient
     private MultipartFile file;
     @Transient
     private String fileDescripcion;
 
+    public Producto(String codigo, String nombre, Categoria categoria, Impuesto impuesto, Proveedor proveedor, TipoProducto tipoProducto, double precioUnitario, int orden, String descripcion, String estado, char visible, Imagen imagen, DateTime fechaDesde, DateTime fechaHasta, MultipartFile file, String fileDescripcion) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.impuesto = impuesto;
+        this.proveedor = proveedor;
+        this.tipoProducto = tipoProducto;
+        this.precioUnitario = precioUnitario;
+        this.orden = orden;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.visible = visible;
+        this.imagen = imagen;
+        this.fechaDesde = fechaDesde;
+        this.fechaHasta = fechaHasta;
+        this.file = file;
+        this.fileDescripcion = fileDescripcion;
+    }
+
+    public Producto(String codigo, String nombre, Categoria categoria, Impuesto impuesto, Proveedor proveedor, TipoProducto tipoProducto, double precioUnitario, int orden, String descripcion, String estado, char visible, Imagen imagen, DateTime fechaDesde, DateTime fechaHasta) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.impuesto = impuesto;
+        this.proveedor = proveedor;
+        this.tipoProducto = tipoProducto;
+        this.precioUnitario = precioUnitario;
+        this.orden = orden;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.visible = visible;
+        this.imagen = imagen;
+        this.fechaDesde = fechaDesde;
+        this.fechaHasta = fechaHasta;
+    }
+
+    public Producto(String codigo, String nombre, Categoria categoria, Impuesto impuesto, Proveedor proveedor, TipoProducto tipoProducto, double precioUnitario, String estado, char visible, Imagen imagen, DateTime fechaDesde) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.impuesto = impuesto;
+        this.proveedor = proveedor;
+        this.tipoProducto = tipoProducto;
+        this.precioUnitario = precioUnitario;
+        this.estado = estado;
+        this.visible = visible;
+        this.imagen = imagen;
+        this.fechaDesde = fechaDesde;
+    }
+
     public Producto() {
-        super();
-        this.idProducto = 0;
         this.codigo = "";
         this.nombre = "";
-        this.precioUnitario = 0;
-        this.precioCompra = 0;
-        this.orden = 0;
-        this.estado = Estado.ACTIVO.getEstado();
+        this.categoria = null;
+        this.impuesto = null;
+        this.proveedor = null;
+        this.tipoProducto = null;
+        this.precioUnitario = 0.00;
+        this.estado = "";
         this.visible = 0;
-        this.documento = null;
-        this.categoria = new Categoria();
-        this.impuesto = new Impuesto();
-        this.proveedor = new Proveedor();
+        this.imagen = null;
+        this.fechaDesde = null;
     }
 
-    public Producto(String codigo, String nombre, double precioUnitario,
-                    double precioCompra, int orden, char habilitado, char visible,
-                    Categoria categoria, Impuesto impuesto, Proveedor proveedor) {
-        super();
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.precioUnitario = precioUnitario;
-        this.precioCompra = precioCompra;
-        this.orden = orden;
-        this.estado = Estado.ACTIVO.getEstado();
-        this.visible = visible;
-        this.categoria = categoria;
-        this.impuesto = impuesto;
-        this.proveedor = proveedor;
-    }
-
-    public Producto(int idProducto, String codigo, String nombre,
-                    double precioUnitario, double precioCompra, int orden,
-                    char habilitado, char visible, Categoria categoria,
-                    Impuesto impuesto, Proveedor proveedor) {
-        super();
-        this.idProducto = idProducto;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.precioUnitario = precioUnitario;
-        this.precioCompra = precioCompra;
-        this.orden = orden;
-        this.estado = Estado.ACTIVO.getEstado();
-        this.visible = visible;
-        this.categoria = categoria;
-        this.impuesto = impuesto;
-        this.proveedor = proveedor;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public int getIdProducto() {
         return idProducto;
     }
+
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
+
     public String getCodigo() {
         return codigo;
     }
+
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Impuesto getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(Impuesto impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public TipoProducto getTipoProducto() {
+        return tipoProducto;
+    }
+
+    public void setTipoProducto(TipoProducto tipoProducto) {
+        this.tipoProducto = tipoProducto;
+    }
+
     public double getPrecioUnitario() {
         return precioUnitario;
     }
+
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
-    public double getPrecioCompra() {
-        return precioCompra;
-    }
-    public void setPrecioCompra(double precioCompra) {
-        this.precioCompra = precioCompra;
-    }
+
     public int getOrden() {
         return orden;
     }
+
     public void setOrden(int orden) {
         this.orden = orden;
     }
+
     public String getDescripcion() {
         return descripcion;
     }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -155,38 +217,33 @@ public class Producto implements Serializable{
     public char getVisible() {
         return visible;
     }
+
     public void setVisible(char visible) {
         this.visible = visible;
     }
-    public Categoria getCategoria() {
-        return categoria;
-    }
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-    public Impuesto getImpuesto() {
-        return impuesto;
-    }
-    public void setImpuesto(Impuesto impuesto) {
-        this.impuesto = impuesto;
-    }
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+
+    public Imagen getImagen() {
+        return imagen;
     }
 
-    public Documento getDocumento() {
-        return documento;
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
     }
 
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
+    public DateTime getFechaDesde() {
+        return fechaDesde;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public void setFechaDesde(DateTime fechaDesde) {
+        this.fechaDesde = fechaDesde;
+    }
+
+    public DateTime getFechaHasta() {
+        return fechaHasta;
+    }
+
+    public void setFechaHasta(DateTime fechaHasta) {
+        this.fechaHasta = fechaHasta;
     }
 
     public MultipartFile getFile() {
@@ -206,20 +263,45 @@ public class Producto implements Serializable{
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Producto)) return false;
+
+        Producto producto = (Producto) o;
+
+        if (getIdProducto() != producto.getIdProducto()) return false;
+        if (!getCodigo().equals(producto.getCodigo())) return false;
+        return getNombre().equals(producto.getNombre());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getIdProducto();
+        result = 31 * result + getCodigo().hashCode();
+        result = 31 * result + getNombre().hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Producto{" +
                 "idProducto=" + idProducto +
                 ", codigo='" + codigo + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", categoria=" + categoria.toString() +
+                ", impuesto=" + impuesto.toString() +
+                ", proveedor=" + proveedor.toString() +
+                ", tipoProducto=" + tipoProducto.toString() +
                 ", precioUnitario=" + precioUnitario +
-                ", precioCompra=" + precioCompra +
                 ", orden=" + orden +
                 ", descripcion='" + descripcion + '\'' +
-                ", estado=" + estado +
+                ", estado='" + estado + '\'' +
                 ", visible=" + visible +
-                ", categoria=" + categoria +
-                ", impuesto=" + impuesto +
-                ", proveedor=" + proveedor +
+                ", imagen=" + imagen.toString() +
+                ", fechaDesde=" + fechaDesde.toString() +
+                ", fechaHasta=" + fechaHasta.toString() +
+                ", file=" + file.toString() +
+                ", fileDescripcion='" + fileDescripcion + '\'' +
                 '}';
     }
 }

@@ -19,22 +19,21 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCategoria;
-    @Size(min=3, max=255)
+    @Size(max=255)
     @Column(name="nombre")
     private String nombre;
+    @ManyToOne
+    @JoinColumn(name="idTipoProducto")
+    private TipoProducto tipoProducto;
 
     public Categoria() {
         this.nombre = "";
+        this.tipoProducto = null;
     }
 
-    public Categoria(String nombre){
-
+    public Categoria(String nombre, TipoProducto tipoProducto) {
         this.nombre = nombre;
-    }
-
-    public Categoria(int idCategoria, String nombre){
-        this.idCategoria = idCategoria;
-        this.nombre = nombre;
+        this.tipoProducto = tipoProducto;
     }
 
     public int getIdCategoria() {
@@ -53,6 +52,18 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public TipoProducto getTipoProducto() {
+        return tipoProducto;
+    }
+
+    public void setTipoProducto(TipoProducto tipoProducto) {
+        this.tipoProducto = tipoProducto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,13 +72,15 @@ public class Categoria implements Serializable {
         Categoria categoria = (Categoria) o;
 
         if (getIdCategoria() != categoria.getIdCategoria()) return false;
-        return getNombre().equals(categoria.getNombre());
+        if (!getNombre().equals(categoria.getNombre())) return false;
+        return getTipoProducto().equals(categoria.getTipoProducto());
     }
 
     @Override
     public int hashCode() {
         int result = getIdCategoria();
         result = 31 * result + getNombre().hashCode();
+        result = 31 * result + getTipoProducto().hashCode();
         return result;
     }
 
@@ -76,6 +89,7 @@ public class Categoria implements Serializable {
         return "Categoria{" +
                 "idCategoria=" + idCategoria +
                 ", nombre='" + nombre + '\'' +
+                ", tipoProducto=" + tipoProducto +
                 '}';
     }
 }
