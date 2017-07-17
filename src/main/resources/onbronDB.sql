@@ -199,14 +199,64 @@ INSERT INTO tipodireccion(descripcion)
 VALUES ('OTRO');
 COMMIT;
 
+DROP TABLE IF EXISTS `departamento`;
+CREATE TABLE `departamento` (
+  `idDepartamento` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idDepartamento`),
+  UNIQUE KEY `idDepartamento_UNIQUE` (`idDepartamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO departamento(descripcion)
+VALUES ('SAN SALVADOR');
+INSERT INTO departamento(descripcion)
+VALUES ('LA LIBERTAD');
+COMMIT;
+
+CREATE TABLE `municipio` (
+  `idMunicipio` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  `idDepartamento` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`idMunicipio`),
+  UNIQUE KEY `idmunicipio_UNIQUE` (`idMunicipio`),
+  KEY `FKMunicipioDepartamento_idx` (`idDepartamento`),
+  CONSTRAINT `FKMunicipioDepartamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO municipio(descripcion,idDepartamento)
+VALUES ('SAN SALVADOR',1);
+INSERT INTO departamento(descripcion)
+VALUES ('ANTIGUO CUSCATLAN', 2);
+INSERT INTO departamento(descripcion)
+VALUES ('SANTA TECLA', 2);
+COMMIT;
+
+CREATE TABLE `municipio` (
+  `idMunicipio` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  `idDepartamento` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`idMunicipio`),
+  UNIQUE KEY `idmunicipio_UNIQUE` (`idMunicipio`),
+  KEY `FKMunicipioDepartamento_idx` (`idDepartamento`),
+  CONSTRAINT `FKMunicipioDepartamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO municipio(descripcion,idDepartamento)
+VALUES ('SAN SALVADOR',1);
+INSERT INTO municipio(descripcion,idDepartamento)
+VALUES ('ANTIGUO CUSCATLAN', 2);
+INSERT INTO municipio(descripcion,idDepartamento)
+VALUES ('SANTA TECLA', 2);
+COMMIT;
+
 DROP TABLE IF EXISTS `direccion`;
 CREATE TABLE `direccion` (
   `idDireccion` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `idCliente` int(11) unsigned NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `referencia` varchar(255) DEFAULT NULL,
-  `departamento` int(11) NOT NULL,
-  `municipio` int(11) DEFAULT NULL,
+  `departamento` int(11) unsigned NOT NULL,
+  `municipio` int(11) unsigned NOT NULL,
   `telefono` varchar(10) NOT NULL,
   `longitud` decimal(25,6) NOT NULL,
   `latitud` decimal(25,6) NOT NULL,
@@ -214,9 +264,14 @@ CREATE TABLE `direccion` (
   PRIMARY KEY (`idDireccion`),
   KEY `FKDireccionesCliente_idx` (`idCliente`),
   KEY `FKDireccionTipoDireccion_idx` (`idTipoDireccion`),
+  KEY `FKDireccionDepartamento_idx` (`departamento`),
+  KEY `FKDireccionMunicipio_idx` (`municipio`,`departamento`),
+  CONSTRAINT `FKDireccionDepartamento` FOREIGN KEY (`departamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FKDireccionMunicipio` FOREIGN KEY (`municipio`) REFERENCES `municipio` (`idMunicipio`) ON UPDATE CASCADE,
   CONSTRAINT `FKDireccionTipoDireccion` FOREIGN KEY (`idTipoDireccion`) REFERENCES `tipodireccion` (`idtipodireccion`) ON UPDATE CASCADE,
   CONSTRAINT `FKDireccionesCliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `tipolealtad`;
 CREATE TABLE `tipolealtad` (
@@ -237,6 +292,7 @@ CREATE TABLE `lealtad` (
   `idCliente` int(11) unsigned NOT NULL,
   `idTipoLealtad` int(11) unsigned NOT NULL,
   `valor` decimal(25,6) NOT NULL,
+  `referencia` varchar(20) NOT NULL,
   PRIMARY KEY (`idLealtad`),
   KEY `FKLealtadCliente_idx` (`idCliente`),
   KEY `FKLealtadTipoLealtad_idx` (`idTipoLealtad`),
@@ -338,7 +394,8 @@ CREATE TABLE `factura` (
   `totalGrabado` decimal(25,6) NOT NULL,
   `totalExento` decimal(25,6) NOT NULL,
   `total` decimal(25,6) NOT NULL,
-  `numero` int(11) unsigned NOT NULL,
+  `serie` varchar(10) DEFAULT NULL,
+  `numero` varchar(10) DEFAULT NULL,
   `idDireccion` int(11) unsigned NOT NULL,
   `resumenDetalle` tinytext,
   `idEstadoTipoFactura` int(11) unsigned NOT NULL,
@@ -356,7 +413,6 @@ CREATE TABLE `factura` (
   CONSTRAINT `FKFormato` FOREIGN KEY (`idFormato`) REFERENCES `formato` (`idFormato`) ON UPDATE CASCADE,
   CONSTRAINT `FKTipoFactura` FOREIGN KEY (`idTipoFactura`) REFERENCES `tipofactura` (`idTipoFactura`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `facturaitem`;
 CREATE TABLE `facturaitem` (
@@ -396,12 +452,15 @@ DROP TABLE IF EXISTS `inventariodetalle`;
 CREATE TABLE `inventariodetalle` (
   `idInventarioDetalle` int(11) unsigned NOT NULL,
   `idInventario` int(11) unsigned NOT NULL,
-  `IdFacturaItem` int(11) unsigned NOT NULL,
+  `idFacturaItem` int(11) unsigned NOT NULL,
+  `idProveedor` int(11) unsigned NOT NULL,
   PRIMARY KEY (`idInventarioDetalle`),
   KEY `FKDetalleInvenario_idx` (`idInventario`),
-  KEY `FKDetalleInventarioFacturaItem_idx` (`IdFacturaItem`),
+  KEY `FKDetalleInventarioFacturaItem_idx` (`idFacturaItem`),
+  KEY `FKDetalleProveedor_idx` (`idProveedor`),
   CONSTRAINT `FKDetalleInvenario` FOREIGN KEY (`idInventario`) REFERENCES `inventario` (`idInventario`) ON UPDATE CASCADE,
-  CONSTRAINT `FKDetalleInventarioFacturaItem` FOREIGN KEY (`IdFacturaItem`) REFERENCES `facturaitem` (`idFacturaItem`) ON UPDATE CASCADE
+  CONSTRAINT `FKDetalleInventarioFacturaItem` FOREIGN KEY (`idFacturaItem`) REFERENCES `facturaitem` (`idFacturaItem`) ON UPDATE CASCADE,
+  CONSTRAINT `FKDetalleProveedor` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idProveedor`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `pago`;

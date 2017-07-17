@@ -35,7 +35,9 @@ public class Cliente implements Serializable {
     private String email;
     @Size(max=10)
     private String telefono;
-
+    private String pin;
+    private String estado;
+    private String verificador;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -97,6 +99,52 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getVerificador() {
+        return verificador;
+    }
+
+    public void setVerificador(String verificador) {
+        this.verificador = verificador;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente)) return false;
+
+        Cliente cliente = (Cliente) o;
+
+        if (!getIdCliente().equals(cliente.getIdCliente())) return false;
+        if (!getNombres().equals(cliente.getNombres())) return false;
+        if (!getPrimerApellido().equals(cliente.getPrimerApellido())) return false;
+        return getGenero().equals(cliente.getGenero());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getIdCliente().hashCode();
+        result = 31 * result + getNombres().hashCode();
+        result = 31 * result + getPrimerApellido().hashCode();
+        result = 31 * result + getGenero().hashCode();
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -107,21 +155,9 @@ public class Cliente implements Serializable {
                 ", genero=" + genero +
                 ", email='" + email + '\'' +
                 ", telefono='" + telefono + '\'' +
+                ", pin='" + pin + '\'' +
+                ", estado='" + estado + '\'' +
+                ", verificador='" + verificador + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cliente)) return false;
-
-        Cliente cliente = (Cliente) o;
-
-        return getIdCliente().equals(cliente.getIdCliente());
-    }
-
-    @Override
-    public int hashCode() {
-        return getIdCliente().hashCode();
     }
 }

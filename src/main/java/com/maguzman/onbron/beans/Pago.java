@@ -34,6 +34,9 @@ public class Pago implements Serializable {
     @Size(max=255)
     private String referenciaExterna;
     private String comentario;
+    private Character signo;
+    @Size(max=12)
+    private String cuenta;
 
     public Pago() {
         this.idpago = 0;
@@ -101,6 +104,22 @@ public class Pago implements Serializable {
         this.comentario = comentario;
     }
 
+    public Character getSigno() {
+        return signo;
+    }
+
+    public void setSigno(Character signo) {
+        this.signo = signo;
+    }
+
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,7 +131,9 @@ public class Pago implements Serializable {
         if (!getFactura().equals(pago.getFactura())) return false;
         if (!getTipoPago().equals(pago.getTipoPago())) return false;
         if (!getMonto().equals(pago.getMonto())) return false;
-        return getFecha().equals(pago.getFecha());
+        if (!getFecha().equals(pago.getFecha())) return false;
+        if (!getSigno().equals(pago.getSigno())) return false;
+        return getCuenta().equals(pago.getCuenta());
     }
 
     @Override
@@ -122,6 +143,8 @@ public class Pago implements Serializable {
         result = 31 * result + getTipoPago().hashCode();
         result = 31 * result + getMonto().hashCode();
         result = 31 * result + getFecha().hashCode();
+        result = 31 * result + getSigno().hashCode();
+        result = 31 * result + getCuenta().hashCode();
         return result;
     }
 
@@ -135,6 +158,8 @@ public class Pago implements Serializable {
                 ", fecha=" + fecha +
                 ", referenciaExterna='" + referenciaExterna + '\'' +
                 ", comentario='" + comentario + '\'' +
+                ", signo=" + signo +
+                ", cuenta='" + cuenta + '\'' +
                 '}';
     }
 }

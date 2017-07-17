@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -45,6 +46,19 @@ public class Factura {
     @NotEmpty
     @Digits(integer = 11, fraction = 2)
     private Double total;
+    @Size (max=10)
+    private String Serie;
+    @Size (max=10)
+    private String numero;
+    @ManyToOne
+    @JoinColumn(name="idDireccion")
+    private Direccion direccion;
+    private String resumenDetalle;
+    @ManyToOne
+    @JoinColumn(name="idEstadoTipoFactura")
+    private EstadoTipoFactura estadoTipoFactura;
+    private Integer facturaRelacionada;
+    private Integer facturaRectificada;
     /*@OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name="facturaitem",
             joinColumns = {@JoinColumn(name="idFactura")},
@@ -62,17 +76,6 @@ public class Factura {
         this.totalGrabado=0.00;
         this.totalExento=0.00;
         this.total=0.00;
-    }
-
-    public Factura(Cliente cliente, TipoFactura tipoFactura, Formato formato, GregorianCalendar fecha, String comentarios, Double totalGrabado, Double totalExento, Double total) {
-        this.cliente = cliente;
-        this.tipoFactura = tipoFactura;
-        this.formato = formato;
-        this.fecha = fecha;
-        this.comentarios = comentarios;
-        this.totalGrabado = totalGrabado;
-        this.totalExento = totalExento;
-        this.total = total;
     }
 
     public Integer getIdFactura() {
@@ -147,14 +150,62 @@ public class Factura {
         this.total = total;
     }
 
-    /*public Set<FacturaItem> getFacturaItemSet() {
-        return facturaItemSet;
+    public String getSerie() {
+        return Serie;
     }
 
-    public void setFacturaItemSet(Set<FacturaItem> facturaItemSet) {
-        this.facturaItemSet = facturaItemSet;
+    public void setSerie(String serie) {
+        Serie = serie;
     }
-*/
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getResumenDetalle() {
+        return resumenDetalle;
+    }
+
+    public void setResumenDetalle(String resumenDetalle) {
+        this.resumenDetalle = resumenDetalle;
+    }
+
+    public EstadoTipoFactura getEstadoTipoFactura() {
+        return estadoTipoFactura;
+    }
+
+    public void setEstadoTipoFactura(EstadoTipoFactura estadoTipoFactura) {
+        this.estadoTipoFactura = estadoTipoFactura;
+    }
+
+    public Integer getFacturaRelacionada() {
+        return facturaRelacionada;
+    }
+
+    public void setFacturaRelacionada(Integer facturaRelacionada) {
+        this.facturaRelacionada = facturaRelacionada;
+    }
+
+    public Integer getFacturaRectificada() {
+        return facturaRectificada;
+    }
+
+    public void setFacturaRectificada(Integer facturaRectificada) {
+        this.facturaRectificada = facturaRectificada;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
